@@ -1,10 +1,6 @@
-from flask import Flask
+from fastapi import FastAPI
+from .routes.routes import router as main_router
 
-def create_app():
-    app = Flask(__name__)
+app = FastAPI()
+app.include_router(main_router) # including the router in the app
 
-    # Importa e registra os blueprints/controllers
-    from .controllers.main_controller import main_bp
-    app.register_blueprint(main_bp)
-
-    return app
