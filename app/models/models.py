@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from ..database import Base
 
 class User(Base):
-    __tablename__ = "usuarios"
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
@@ -23,7 +23,7 @@ class Booking(Base):
     start_date = Column(Date)
     end_date = Column(Date)
     book_id = Column(Integer, ForeignKey('books.id'))
-    user_id = Column(Integer, ForeignKey('usuarios.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
 
     book = relationship("Book")
     user = relationship("User")
