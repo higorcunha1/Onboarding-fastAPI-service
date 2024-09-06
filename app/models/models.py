@@ -1,0 +1,29 @@
+from sqlalchemy import Column, Integer, String, ForeignKey, Date
+from sqlalchemy.orm import relationship
+from ..database import Base
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+
+class Book(Base):
+    __tablename__ = "books"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    genre = Column(String)
+    copies_number = Column(Integer)
+
+class Booking(Base):
+    __tablename__ = "booking"
+
+    id = Column(Integer, primary_key=True, index=True)
+    start_date = Column(Date)
+    end_date = Column(Date)
+    book_id = Column(Integer, ForeignKey('books.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
+
+    book = relationship("Book")
+    user = relationship("User")
