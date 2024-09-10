@@ -1,7 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from app.controller.controller import UserController, BookController, BookingController, hello_response, echo_response
 from pydantic import BaseModel
-
+from app.auth import authenticate_user
 router = APIRouter()
 
 # Defining the request models for the routes
@@ -23,26 +23,29 @@ class BookingRequest(BaseModel):
 user_controller = UserController()
 
 @router.post("/users/")
-def add_user(user: UserRequest):
+# Requiring authentication to the route
+def add_user(user: UserRequest, username: str = Depends(authenticate_user)):
     return user_controller.create(user.name)
 
 # Routes related to books
 book_controller = BookController()
 
 @router.post("/books/")
-def add_book(book: BookRequest):
+# Requiring authentication to the route
+def add_book(book: BookRequest, username: str = Depends(authenticate_user)):
     return book_controller.create(book.name, book.genre, book.copies_number)
 
 # Routes related to bookings
 booking_controller = BookingController()
 
 @router.post("/bookings/")
-def add_booking(booking: BookingRequest):
+# Requiring authentication to the route
+def add_booking(booking: BookingRequest, username: str = Depends(authenticate_user)):
     return booking_controller.create(booking.start_date, booking.end_date, booking.book_id, booking.user_id)
 
 # Hello world route
 @router.get("/hello") 
-async def hello_world():
+async def hello_world(username: str = Depends(authenticate_user)):
     return hello_response()
 
 # Echo route
@@ -50,5 +53,5 @@ class EchoRequest(BaseModel):
     value: str
 
 @router.post("/echo") 
-async def echo(request: EchoRequest):
+async def echo(request: EchoRequest, username: str = Depends(authenticate_user)):
     return echo_response(request.value)
