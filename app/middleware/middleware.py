@@ -1,6 +1,7 @@
 from fastapi import Request, HTTPException
 from starlette.middleware.base import BaseHTTPMiddleware
 from dotenv import load_dotenv
+from fastapi.responses import JSONResponse
 import base64
 import os
 
@@ -24,13 +25,22 @@ class AuthMiddleware(BaseHTTPMiddleware):
 
                     # Checking if the password is correct
                     if password != PASSWORD:
-                        raise HTTPException(status_code=401, detail="Invalid credentials")
-                
+                        return JSONResponse(
+                            status_code=401,
+                            content={"detail": "Invalid credentials"}
+                        )
+
 
             except Exception:
-                raise HTTPException(status_code=401, detail="Invalid authentication credentials")
+                return JSONResponse(
+                    status_code=401,
+                    content={"detail": "Invalid authentication credentials"}
+                )
         else:
-            raise HTTPException(status_code=401, detail="Missing Authorization header")
+            return JSONResponse(
+                status_code=401,
+                content={"detail": "Missing Authorization header"}
+            )
 
         response = await call_next(request)
         return response
