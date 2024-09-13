@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 from app.controller.controller import UserController, BookController, BookingController, hello_response, echo_response
 from pydantic import BaseModel
-
 router = APIRouter()
 
 # Defining the request models for the routes
@@ -23,6 +22,7 @@ class BookingRequest(BaseModel):
 user_controller = UserController()
 
 @router.post("/users/")
+# Requiring authentication to the route
 def add_user(user: UserRequest):
     return user_controller.create(user.name)
 
@@ -30,6 +30,7 @@ def add_user(user: UserRequest):
 book_controller = BookController()
 
 @router.post("/books/")
+# Requiring authentication to the route
 def add_book(book: BookRequest):
     return book_controller.create(book.name, book.genre, book.copies_number)
 
@@ -37,6 +38,7 @@ def add_book(book: BookRequest):
 booking_controller = BookingController()
 
 @router.post("/bookings/")
+# Requiring authentication to the route
 def add_booking(booking: BookingRequest):
     return booking_controller.create(booking.start_date, booking.end_date, booking.book_id, booking.user_id)
 
