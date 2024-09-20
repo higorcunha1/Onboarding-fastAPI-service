@@ -10,6 +10,14 @@ COPY requirements.txt .
 # install all dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+COPY wait-for-it.sh /app/
+
+# Instalar curl (se necessário) para baixar o script
+RUN apt-get update && apt-get install -y curl
+
+RUN curl -o /usr/local/bin/wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh \
+    && chmod +x /usr/local/bin/wait-for-it.sh
+
 # copy the app code to the work directory
 COPY . .
 
@@ -17,4 +25,4 @@ COPY . .
 EXPOSE 8000
 
 # the parameters to run the app
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["./wait-for-it.sh", "postgres:5432", "--", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

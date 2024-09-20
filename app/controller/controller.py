@@ -30,13 +30,28 @@ class BookController:
         db.refresh(db_book)
         return db_book
 
+# This class creates a booking in the database
 class BookingController:
     def create(self, start_date: str, end_date: str, book_id: int, user_id: int):
         db = next(get_db()) # Connecting with the db
+        
+        # Verify if the user exists
+        db_book = db.query(Book).filter(Book.id == book_id).first()
+        if not db_book:
+            return JSONResponse(content={"message": "Book not found"}, status_code=404)
+        
+        if db_book.copies_number <= 0:
+            return JSONResponse(content={"message": "No copies available"}, status_code=400)
+        
+        # Creating the booking
         db_booking = Booking(start_date=start_date, end_date=end_date, book_id=book_id, user_id=user_id)
         db.add(db_booking)
+        
+        db_book.copies_number -= 1
         db.commit()
         db.refresh(db_booking)
+        db.refresh(db_book)
+        
         return db_booking
 
 def hello_response():
