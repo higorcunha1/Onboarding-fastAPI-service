@@ -8,11 +8,16 @@ services:
     ports:
       - "5432:5432"
 
-  app:
-    build: .
+    
+  booking-service:
+    build:
+      context: .
+      dockerfile: ./mc-bookingservice/Dockerfile
     depends_on:
       - postgres
-    ports:
-      - "8000:8000"
+  
     environment:
       DATABASE_URL: "postgresql://admin:admin@postgres:5432/mydatabase"
+    ports:
+      - "8002:8002"
+
