@@ -8,9 +8,8 @@ class Booking(Base):
     id = Column(Integer, primary_key=True, index=True)
     start_date = Column(Date)
     end_date = Column(Date)
- 
-
-    #book = relationship("Book", back_populates="id")
+    book_id = Column(Integer, ForeignKey('books.id'))
+    user_id = Column(Integer)
 
 class Book(Base):
     __tablename__ = "books"
@@ -19,7 +18,6 @@ class Book(Base):
     name = Column(String)
     genre = Column(String)
     copies_number = Column(Integer)
-
 
 class User(Base):
     __tablename__ = "users"
