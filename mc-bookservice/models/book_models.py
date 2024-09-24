@@ -1,6 +1,5 @@
 from sqlalchemy import Column, Integer, String
 from database import Base
-from sqlalchemy.orm import relationship
 
 class Book(Base):
     __tablename__ = "books"
@@ -10,4 +9,3 @@ class Book(Base):
     genre = Column(String)
     copies_number = Column(Integer)
 
-    #bookings = relationship("Booking", back_populates="book")

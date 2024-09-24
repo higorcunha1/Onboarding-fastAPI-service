@@ -14,4 +14,4 @@ booking_controller = BookingController()
 
 @router.post("/bookings/")
 def add_booking(booking: BookingRequest):
-    return booking_controller.create(booking.start_date, booking.end_date, booking.book_id, booking.user_id)
+    return booking_controller.create_booking(booking.start_date, booking.end_date, booking.book_id, booking.user_id)

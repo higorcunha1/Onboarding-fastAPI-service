@@ -8,6 +8,28 @@ services:
     ports:
       - "5432:5432"
 
+  user-service:
+    build: 
+      context: .
+      dockerfile: ./mc-userservice/Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "postgresql://admin:admin@postgres:5432/mydatabase"
+    ports:
+      - "8000:8000"
+
+  book-service:
+    build:
+      context: .
+      dockerfile: ./mc-bookservice/Dockerfile
+    depends_on:
+      - postgres
+      - user-service
+    environment:
+      DATABASE_URL: "postgresql://admin:admin@postgres:5432/mydatabase"
+    ports:
+      - "8001:8001"
     
   booking-service:
     build:
@@ -15,7 +37,8 @@ services:
       dockerfile: ./mc-bookingservice/Dockerfile
     depends_on:
       - postgres
-  
+      - user-service
+      - book-service
     environment:
       DATABASE_URL: "postgresql://admin:admin@postgres:5432/mydatabase"
     ports:

@@ -6,7 +6,7 @@ from middleware.middleware import AuthMiddleware
 
 def create_app():
     app = FastAPI()
-    #app.add_middleware(AuthMiddleware)
+    app.add_middleware(AuthMiddleware)
     app.include_router(router)
     return app
 

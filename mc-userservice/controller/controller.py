@@ -1,5 +1,4 @@
 from fastapi.responses import JSONResponse
-from sqlalchemy.orm import Session
 from models.models import User
 from database import SessionLocal, DatabaseSession
 
