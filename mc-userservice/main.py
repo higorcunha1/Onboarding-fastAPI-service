@@ -1,8 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
-from app.routes.routes import router
-from app.database import Base, engine
-from app.middleware.middleware import AuthMiddleware
+from routes.routes import router
+from database import Base, engine
+from middleware.middleware import AuthMiddleware
 
 def create_app():
     app = FastAPI()
