@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "fastapi-onboarding-chart.fullname" . }}-bookingservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "fastapi-onboarding-chart.fullname" . }}-bookingservice
+  
+  template:
+    metadata:
+      labels:
+        app: {{ include "fastapi-onboarding-chart.fullname" . }}-bookingservice
+    
+    spec:
+      containers:
+        - name: bookingservice
+          image: "{{ .Values.bookingservice.image.repository }}:{{ .Values.bookingservice.image.tag }}"
+          ports:
+            - containerPort: 80

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "fastapi-onboarding-chart.fullname" . }}-bookservice
+spec:
+  type: {{ .Values.bookservice.service.type }}
+  ports:
+    - port: {{ .Values.bookservice.service.port }}
+      targetPort: 80
+  selector:
+    app: {{ include "fastapi-onboarding-chart.fullname" . }}-bookservice

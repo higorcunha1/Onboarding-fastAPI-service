@@ -1,0 +1,28 @@
+postgres:
+  username: admin
+  password: admin
+  database: mydatabase
+
+userservice:
+  image:
+    repository: higorcunha1/mc-userservice
+    tag: latest1
+  service:
+    type: ClusterIP
+    port: 80
+
+bookservice:
+  image:
+    repository: higorcunha1/mc-bookservice
+    tag: latest1
+  service:
+    type: ClusterIP
+    port: 80
+
+bookingservice:
+  image:
+    repository: higorcunha1/mc-bookingservice
+    tag: latest1
+  service:
+    type: ClusterIP
+    port: 80

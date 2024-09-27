@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "fastapi-onboarding-chart.fullname" . }}-userservice
+spec:
+  type: {{ .Values.userservice.service.type }}
+  ports:
+    - port: {{ .Values.userservice.service.port }}
+      targetPort: 80
+  selector:
+    app: {{ include "fastapi-onboarding-chart.fullname" . }}-userservice
