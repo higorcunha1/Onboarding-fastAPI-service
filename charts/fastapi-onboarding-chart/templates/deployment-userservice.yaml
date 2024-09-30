@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "fastapi-onboarding-chart.fullname" . }}-userservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "fastapi-onboarding-chart.fullname" . }}-userservice
+  
+  template:
+    metadata:
+      labels:
+        app: {{ include "fastapi-onboarding-chart.fullname" . }}-userservice
+    
+    spec:
+      containers:
+        - name: userservice
+          image: "{{ .Values.userservice.image.repository }}:{{ .Values.userservice.image.tag }}"
+          ports:
+            - containerPort: 80

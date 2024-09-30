@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "fastapi-onboarding-chart.fullname" . }}-postgres
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+  selector:
+    app: {{ include "fastapi-onboarding-chart.fullname" . }}-postgres

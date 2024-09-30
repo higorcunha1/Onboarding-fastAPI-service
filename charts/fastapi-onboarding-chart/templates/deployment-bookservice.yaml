@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "fastapi-onboarding-chart.fullname" . }}-bookservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "fastapi-onboarding-chart.fullname" . }}-bookservice
+  
+  template:
+    metadata:
+      labels:
+        app: {{ include "fastapi-onboarding-chart.fullname" . }}-bookservice
+    
+    spec:
+      containers:
+        - name: bookservice
+          image: "{{ .Values.bookservice.image.repository }}:{{ .Values.bookservice.image.tag }}"
+          ports:
+            - containerPort: 80
