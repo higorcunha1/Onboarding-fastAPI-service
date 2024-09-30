@@ -16,7 +16,6 @@ Prerequisites
     Kubernetes and a working cluster (e.g., Minikube)
     Helm for Kubernetes package management
     Docker (to build images)
-    kubectl (Kubernetes command-line tool)
 
 Setup
 
